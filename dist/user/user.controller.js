@@ -20,23 +20,22 @@ let UserController = class UserController {
         this.userService = userService;
     }
     showAllUser() {
-        return this.userService.getUser();
+        return this.userService.getAllUser();
     }
     showUserById(id) {
         return this.userService.getUserById(id);
     }
     makeAUser(UserDto) {
-        console.log(UserDto.userName);
-        return this.userService.createAUser(UserDto);
+        return this.userService.createUser(UserDto);
     }
     changeAUser(UserDto, id) {
-        return this.userService.updateAUser(id, UserDto);
+        return this.userService.updateUser(id, UserDto);
     }
     deleteAllUser() {
-        return this.userService.removeUsers();
+        return this.userService.deleteAllUser();
     }
     deleteOneUser(id) {
-        return this.userService.removeUserById(id);
+        return this.userService.deleteOneUser(id);
     }
 };
 __decorate([
@@ -62,9 +61,9 @@ __decorate([
 __decorate([
     (0, common_1.Put)(":id"),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Param)("id", common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Number]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "changeAUser", null);
 __decorate([
@@ -75,9 +74,9 @@ __decorate([
 ], UserController.prototype, "deleteAllUser", null);
 __decorate([
     (0, common_1.Delete)(":id"),
-    __param(0, (0, common_1.Param)("id", common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "deleteOneUser", null);
 UserController = __decorate([

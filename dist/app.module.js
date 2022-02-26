@@ -9,10 +9,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const user_module_1 = require("./user/user.module");
+const mongoose_1 = require("@nestjs/mongoose");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
-    (0, common_1.Module)({ imports: [user_module_1.UserModule] })
+    (0, common_1.Module)({ imports: [user_module_1.UserModule, mongoose_1.MongooseModule.forRoot('mongodb+srv://imyogeshgaur:imyogeshgaur@cluster0.f7yqn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')] })
 ], AppModule);
 exports.AppModule = AppModule;
 //# sourceMappingURL=app.module.js.map

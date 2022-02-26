@@ -1,34 +1,24 @@
+import { UserDocument } from './schema/user.schema';
+import { User } from './schema/user.schema';
+import { Model } from "mongoose";
+import { UserDto } from './userDto.dto';
 export declare class UserService {
-    users: {
-        id: number;
-        email: string;
-        userName: string;
-        password: string;
-    }[];
-    getUser(): {
-        id: number;
-        email: string;
-        userName: string;
-        password: string;
-    }[];
-    getUserById(id: Number): {
-        id: number;
-        email: string;
-        userName: string;
-        password: string;
-    };
-    createAUser(UserDto: any): void;
-    updateAUser(id: number, UserDto: any): void;
-    removeUsers(): {
-        id: number;
-        email: string;
-        userName: string;
-        password: string;
-    }[];
-    removeUserById(id: number): {
-        id: number;
-        email: string;
-        userName: string;
-        password: string;
-    }[];
+    private userModel;
+    constructor(userModel: Model<UserDocument>);
+    getAllUser(): Promise<(User & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    })[]>;
+    getUserById(id: number): Promise<(User & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    })[]>;
+    createUser(UserDto: UserDto): Promise<User & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    }>;
+    updateUser(id: any, UserDto: any): Promise<User & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    }>;
+    deleteAllUser(): Promise<any>;
+    deleteOneUser(_id: number): Promise<User & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    }>;
 }

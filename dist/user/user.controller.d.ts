@@ -2,30 +2,20 @@ import { UserService } from './user.service';
 export declare class UserController {
     private userService;
     constructor(userService: UserService);
-    showAllUser(): {
-        id: number;
-        email: string;
-        userName: string;
-        password: string;
-    }[];
-    showUserById(id: number): {
-        id: number;
-        email: string;
-        userName: string;
-        password: string;
-    };
-    makeAUser(UserDto: any): void;
-    changeAUser(UserDto: any, id: number): void;
-    deleteAllUser(): {
-        id: number;
-        email: string;
-        userName: string;
-        password: string;
-    }[];
-    deleteOneUser(id: number): {
-        id: number;
-        email: string;
-        userName: string;
-        password: string;
-    }[];
+    showAllUser(): Promise<(import("./schema/user.schema").User & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    })[]>;
+    showUserById(id: number): Promise<(import("./schema/user.schema").User & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    })[]>;
+    makeAUser(UserDto: any): Promise<import("./schema/user.schema").User & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    }>;
+    changeAUser(UserDto: any, id: any): Promise<import("./schema/user.schema").User & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    }>;
+    deleteAllUser(): Promise<any>;
+    deleteOneUser(id: any): Promise<import("./schema/user.schema").User & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    }>;
 }

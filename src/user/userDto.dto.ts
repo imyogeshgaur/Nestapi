@@ -1,6 +1,6 @@
-export class UserDto{
-    id:number;
-    email:string;
-    userName:string;
-    password:string
+export class UserDto {
+    userId: Number;
+    email: string;
+    userName: string;
+    password: string
 }

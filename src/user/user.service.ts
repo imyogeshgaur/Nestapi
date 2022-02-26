@@ -1,58 +1,48 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { UserDocument } from './schema/user.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { User } from './schema/user.schema';
+import { Model } from "mongoose"
+import { UserDto } from './userDto.dto';
+import { LargeNumberLike } from 'crypto';
+
 
 @Injectable()
 export class UserService {
-    users=[
-        {
-            id:1,
-            email:"lorem@gmail.com",
-            userName:"lorem345",
-            password:"12345"
-        },
-        {
-            id:2,
-            email:"borem@gmail.com",
-            userName:"borem3450",
-            password:"123495"
-        },
-        {
-            id:3,
-            email:"torem@gmail.com",
-            userName:"lorem345",
-            password:"123485"
-        },
-    ]
-    //GET
-    getUser(){
-        return this.users
+    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
+    //Get Request 
+    async getAllUser(){
+        const allUsers = await this.userModel.find();
+        return allUsers;
     }
-    getUserById(id:Number){
-        return this.users.find((user)=>user.id===id)
+    async getUserById(id:number){
+       const userWithId = await this.userModel.find({id});
+       return userWithId
     }
 
-    //POST
-
-    createAUser(UserDto){
-        this.users.push(UserDto)
+    //Post Request 
+    async createUser(UserDto: UserDto){
+        try {
+            const createdUser = new this.userModel(UserDto);
+            return await createdUser.save();
+        } catch (error) {
+            throw new HttpException("Internal Server Error !!!",HttpStatus.BAD_GATEWAY)
+        }
     }
 
-    //PATCH/PUT
+    //Put Request 
 
-    updateAUser(id:number,UserDto){
-        const targetUser = this.users.find((user)=>user.id===id)
-        targetUser.email = UserDto.email;
-        targetUser.userName = UserDto.userName;
-        targetUser.password = UserDto.password;
-        this.users.push(targetUser)
+    async updateUser(id,UserDto){
+        const userWithId = await this.userModel.findByIdAndUpdate({_id:id},UserDto);
+        return userWithId;
     }
 
-    //DELETE
+    //Delete Request 
 
-    removeUsers(){
-        this.users = []
-        return this.users;
+    async deleteAllUser(){
+        return this.userModel.remove()
     }
-    removeUserById(id:number){
-        return this.users.filter((user)=>{return user.id != id})
+    async deleteOneUser(_id:number){
+        return this.userModel.findByIdAndDelete({_id})
     }
 }

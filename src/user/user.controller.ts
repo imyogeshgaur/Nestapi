@@ -1,13 +1,15 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put,  } from '@nestjs/common';
 import { UserService } from './user.service';
 
+
+
 @Controller('user')
 export class UserController {
     constructor(private userService:UserService){}
-    //Get Operations Locally 
+    //Get Operations From Database 
         @Get()
         showAllUser(){
-            return this.userService.getUser()
+            return this.userService.getAllUser()
         }
         @Get(":id")
         showUserById(
@@ -15,36 +17,36 @@ export class UserController {
         ){
             return this.userService.getUserById(id)
         }
-    //Post Operation Locally 
+    //Post Operation From Database  
     @Post()
     makeAUser(
         @Body() UserDto
     ){
-        console.log(UserDto.userName);
-        
-        return this.userService.createAUser(UserDto)
+            
+        return this.userService.createUser(UserDto)
         
     }
 
-    //Put/Patch Request 
+    //Put/Patch Request From Database  
 
     @Put(":id")
     changeAUser(
         @Body() UserDto,
-        @Param("id",ParseIntPipe)id:number
+        @Param("id")id
     ){
-        return this.userService.updateAUser(id,UserDto)
+        return this.userService.updateUser(id,UserDto)
     }
 
-    //Delete Operation Locally 
+    //Delete Operation From Database 
         @Delete()
         deleteAllUser(){
-            return this.userService.removeUsers()
+            return this.userService.deleteAllUser()
         }
         @Delete(":id")
         deleteOneUser(
-            @Param("id",ParseIntPipe) id:number
+            @Param("id") id
         ){
-            return this.userService.removeUserById(id)
+            return this.userService.deleteOneUser(id)
         }
 }
+

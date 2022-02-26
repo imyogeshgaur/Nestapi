@@ -5,58 +5,54 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
+const mongoose_1 = require("@nestjs/mongoose");
+const user_schema_1 = require("./schema/user.schema");
+const mongoose_2 = require("mongoose");
 let UserService = class UserService {
-    constructor() {
-        this.users = [
-            {
-                id: 1,
-                email: "lorem@gmail.com",
-                userName: "lorem345",
-                password: "12345"
-            },
-            {
-                id: 2,
-                email: "borem@gmail.com",
-                userName: "borem3450",
-                password: "123495"
-            },
-            {
-                id: 3,
-                email: "torem@gmail.com",
-                userName: "lorem345",
-                password: "123485"
-            },
-        ];
+    constructor(userModel) {
+        this.userModel = userModel;
     }
-    getUser() {
-        return this.users;
+    async getAllUser() {
+        const allUsers = await this.userModel.find();
+        return allUsers;
     }
-    getUserById(id) {
-        return this.users.find((user) => user.id === id);
+    async getUserById(id) {
+        const userWithId = await this.userModel.find({ id });
+        return userWithId;
     }
-    createAUser(UserDto) {
-        this.users.push(UserDto);
+    async createUser(UserDto) {
+        try {
+            const createdUser = new this.userModel(UserDto);
+            return await createdUser.save();
+        }
+        catch (error) {
+            throw new common_1.HttpException("Internal Server Error !!!", common_1.HttpStatus.BAD_GATEWAY);
+        }
     }
-    updateAUser(id, UserDto) {
-        const targetUser = this.users.find((user) => user.id === id);
-        targetUser.email = UserDto.email;
-        targetUser.userName = UserDto.userName;
-        targetUser.password = UserDto.password;
-        this.users.push(targetUser);
+    async updateUser(id, UserDto) {
+        const userWithId = await this.userModel.findByIdAndUpdate({ _id: id }, UserDto);
+        return userWithId;
     }
-    removeUsers() {
-        this.users = [];
-        return this.users;
+    async deleteAllUser() {
+        return this.userModel.remove();
     }
-    removeUserById(id) {
-        return this.users.filter((user) => { return user.id != id; });
+    async deleteOneUser(_id) {
+        return this.userModel.findByIdAndDelete({ _id });
     }
 };
 UserService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __param(0, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model])
 ], UserService);
 exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map
