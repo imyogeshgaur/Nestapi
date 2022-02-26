@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put,  } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put,  } from '@nestjs/common';
 import { UserService } from './user.service';
 
 
@@ -9,21 +9,32 @@ export class UserController {
     //Get Operations From Database 
         @Get()
         showAllUser(){
-            return this.userService.getAllUser()
+            try {
+                return this.userService.getAllUser()
+            } catch (error) {
+                throw new HttpException("Cannot Get User !!!",HttpStatus.INTERNAL_SERVER_ERROR)
+            }
         }
         @Get(":id")
         showUserById(
             @Param("id",ParseIntPipe) id:number
         ){
-            return this.userService.getUserById(id)
+            try {
+                return this.userService.getUserById(id)
+            } catch (error) {
+                throw new HttpException("Cannot Get User !!!",HttpStatus.INTERNAL_SERVER_ERROR)
+            }
         }
     //Post Operation From Database  
     @Post()
     makeAUser(
         @Body() UserDto
     ){
-            
-        return this.userService.createUser(UserDto)
+        try {
+            this.userService.createUser(UserDto)
+        } catch (error) {
+            throw new HttpException("Cannot Create  User !!!",HttpStatus.INTERNAL_SERVER_ERROR)
+        }
         
     }
 
@@ -34,19 +45,31 @@ export class UserController {
         @Body() UserDto,
         @Param("id")id
     ){
-        return this.userService.updateUser(id,UserDto)
+        try {
+            return this.userService.updateUser(id,UserDto)
+        } catch (error) {
+            throw new HttpException("Cannot Update User !!!",HttpStatus.INTERNAL_SERVER_ERROR)
+        }
     }
 
     //Delete Operation From Database 
         @Delete()
         deleteAllUser(){
-            return this.userService.deleteAllUser()
+            try {
+                return this.userService.deleteAllUser()
+            } catch (error) {
+                throw new HttpException("Cannot Get User !!!",HttpStatus.INTERNAL_SERVER_ERROR)
+            }
         }
         @Delete(":id")
         deleteOneUser(
             @Param("id") id
         ){
-            return this.userService.deleteOneUser(id)
+            try {
+                return this.userService.deleteOneUser(id);
+            } catch (error) {
+                throw new HttpException("Cannot Get User !!!",HttpStatus.INTERNAL_SERVER_ERROR)
+            }
         }
 }
 

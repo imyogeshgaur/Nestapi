@@ -20,22 +20,52 @@ let UserController = class UserController {
         this.userService = userService;
     }
     showAllUser() {
-        return this.userService.getAllUser();
+        try {
+            return this.userService.getAllUser();
+        }
+        catch (error) {
+            throw new common_1.HttpException("Cannot Get User !!!", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     showUserById(id) {
-        return this.userService.getUserById(id);
+        try {
+            return this.userService.getUserById(id);
+        }
+        catch (error) {
+            throw new common_1.HttpException("Cannot Get User !!!", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     makeAUser(UserDto) {
-        return this.userService.createUser(UserDto);
+        try {
+            this.userService.createUser(UserDto);
+        }
+        catch (error) {
+            throw new common_1.HttpException("Cannot Create  User !!!", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     changeAUser(UserDto, id) {
-        return this.userService.updateUser(id, UserDto);
+        try {
+            return this.userService.updateUser(id, UserDto);
+        }
+        catch (error) {
+            throw new common_1.HttpException("Cannot Update User !!!", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     deleteAllUser() {
-        return this.userService.deleteAllUser();
+        try {
+            return this.userService.deleteAllUser();
+        }
+        catch (error) {
+            throw new common_1.HttpException("Cannot Get User !!!", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     deleteOneUser(id) {
-        return this.userService.deleteOneUser(id);
+        try {
+            return this.userService.deleteOneUser(id);
+        }
+        catch (error) {
+            throw new common_1.HttpException("Cannot Get User !!!", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 };
 __decorate([

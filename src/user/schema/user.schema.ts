@@ -3,14 +3,14 @@ import { ObjectUnsubscribedError } from "rxjs";
 
 
 export const UserSchema = new mongoose.Schema({
-  userId: Number,
+  id: Number,
   email: String,
   userName: String,
   password: String
 });
 
 export class User {
-  userId: number;
+  id: number;
   email: string;
   userName: string;
   password: string

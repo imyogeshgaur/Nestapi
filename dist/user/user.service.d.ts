@@ -14,11 +14,9 @@ export declare class UserService {
     createUser(UserDto: UserDto): Promise<User & import("mongoose").Document<any, any, any> & {
         _id: any;
     }>;
-    updateUser(id: any, UserDto: any): Promise<User & import("mongoose").Document<any, any, any> & {
-        _id: any;
-    }>;
+    updateUser(id: any, UserDto: any): Promise<import("mongodb").UpdateResult>;
     deleteAllUser(): Promise<any>;
-    deleteOneUser(_id: number): Promise<User & import("mongoose").Document<any, any, any> & {
+    deleteOneUser(id: number): Promise<User & import("mongoose").Document<any, any, any> & {
         _id: any;
     }>;
 }

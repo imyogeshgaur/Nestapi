@@ -8,12 +8,8 @@ export declare class UserController {
     showUserById(id: number): Promise<(import("./schema/user.schema").User & import("mongoose").Document<any, any, any> & {
         _id: any;
     })[]>;
-    makeAUser(UserDto: any): Promise<import("./schema/user.schema").User & import("mongoose").Document<any, any, any> & {
-        _id: any;
-    }>;
-    changeAUser(UserDto: any, id: any): Promise<import("./schema/user.schema").User & import("mongoose").Document<any, any, any> & {
-        _id: any;
-    }>;
+    makeAUser(UserDto: any): void;
+    changeAUser(UserDto: any, id: any): Promise<import("mongodb").UpdateResult>;
     deleteAllUser(): Promise<any>;
     deleteOneUser(id: any): Promise<import("./schema/user.schema").User & import("mongoose").Document<any, any, any> & {
         _id: any;

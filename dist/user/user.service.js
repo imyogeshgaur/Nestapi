@@ -30,23 +30,18 @@ let UserService = class UserService {
         return userWithId;
     }
     async createUser(UserDto) {
-        try {
-            const createdUser = new this.userModel(UserDto);
-            return await createdUser.save();
-        }
-        catch (error) {
-            throw new common_1.HttpException("Internal Server Error !!!", common_1.HttpStatus.BAD_GATEWAY);
-        }
+        const createdUser = new this.userModel(UserDto);
+        return await createdUser.save();
     }
     async updateUser(id, UserDto) {
-        const userWithId = await this.userModel.findByIdAndUpdate({ _id: id }, UserDto);
+        const userWithId = await this.userModel.updateOne({ id }, UserDto);
         return userWithId;
     }
     async deleteAllUser() {
         return this.userModel.remove();
     }
-    async deleteOneUser(_id) {
-        return this.userModel.findByIdAndDelete({ _id });
+    async deleteOneUser(id) {
+        return this.userModel.findOneAndRemove({ id });
     }
 };
 UserService = __decorate([
