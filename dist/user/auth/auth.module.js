@@ -6,15 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
-const user_module_1 = require("./user/user.module");
-const mongoose_1 = require("@nestjs/mongoose");
-const auth_module_1 = require("./user/auth/auth.module");
-let AppModule = class AppModule {
+const auth_controller_1 = require("./auth.controller");
+const auth_service_1 = require("./auth.service");
+const authenticate_middleare_1 = require("../MiddleWare/authenticate.middleare");
+let AuthModule = class AuthModule {
+    configure(consumer) {
+        consumer.apply(authenticate_middleare_1.validateUser).forRoutes(auth_controller_1.AuthController);
+    }
 };
-AppModule = __decorate([
-    (0, common_1.Module)({ imports: [user_module_1.UserModule, mongoose_1.MongooseModule.forRoot('mongodb+srv://imyogeshgaur:imyogeshgaur@cluster0.f7yqn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'), auth_module_1.AuthModule] })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+AuthModule = __decorate([
+    (0, common_1.Module)({
+        controllers: [auth_controller_1.AuthController],
+        providers: [auth_service_1.AuthService]
+    })
+], AuthModule);
+exports.AuthModule = AuthModule;
+//# sourceMappingURL=auth.module.js.map
