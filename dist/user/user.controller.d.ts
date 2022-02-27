@@ -9,8 +9,9 @@ export declare class UserController {
         _id: any;
     })[]>;
     makeAUser(UserDto: any): void;
+    makeAPassHash(UserDto: any): void;
     changeAUser(UserDto: any, id: any): Promise<import("mongodb").UpdateResult>;
-    deleteAllUser(): Promise<any>;
+    deleteAllUser(): Promise<import("mongodb").DeleteResult>;
     deleteOneUser(id: any): Promise<import("./schema/user.schema").User & import("mongoose").Document<any, any, any> & {
         _id: any;
     }>;

@@ -43,6 +43,14 @@ let UserController = class UserController {
             throw new common_1.HttpException("Cannot Create  User !!!", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    makeAPassHash(UserDto) {
+        try {
+            this.userService.createUserPassHash(UserDto);
+        }
+        catch (error) {
+            throw new common_1.HttpException("Cannot Create  User !!!", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     changeAUser(UserDto, id) {
         try {
             return this.userService.updateUser(id, UserDto);
@@ -88,6 +96,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "makeAUser", null);
+__decorate([
+    (0, common_1.Post)("/hash"),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "makeAPassHash", null);
 __decorate([
     (0, common_1.Put)(":id"),
     __param(0, (0, common_1.Body)()),

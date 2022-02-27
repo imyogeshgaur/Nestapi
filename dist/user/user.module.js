@@ -12,7 +12,11 @@ const user_schema_1 = require("./schema/user.schema");
 const user_controller_1 = require("./user.controller");
 const user_service_1 = require("./user.service");
 const mongoose_1 = require("@nestjs/mongoose");
+const authenticate_middleare_1 = require("./MiddleWare/authenticate.middleare");
 let UserModule = class UserModule {
+    configure(consumer) {
+        consumer.apply(authenticate_middleare_1.validateUser).forRoutes(user_controller_1.UserController);
+    }
 };
 UserModule = __decorate([
     (0, common_1.Module)({

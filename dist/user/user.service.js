@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const user_schema_1 = require("./schema/user.schema");
 const mongoose_2 = require("mongoose");
+const bcrypt = require("bcrypt");
 let UserService = class UserService {
     constructor(userModel) {
         this.userModel = userModel;
@@ -29,8 +30,19 @@ let UserService = class UserService {
         const userWithId = await this.userModel.find({ id });
         return userWithId;
     }
+    async getUserByName(userName) {
+        const userWithNumber = await this.userModel.find({ userName });
+        return userWithNumber;
+    }
     async createUser(UserDto) {
         const createdUser = new this.userModel(UserDto);
+        return await createdUser.save();
+    }
+    async createUserPassHash(UserDto) {
+        const createdUser = new this.userModel(UserDto);
+        const saltOrRounds = 10;
+        const hash = await bcrypt.hash(UserDto.password, saltOrRounds);
+        createdUser.password = hash;
         return await createdUser.save();
     }
     async updateUser(id, UserDto) {
@@ -38,7 +50,7 @@ let UserService = class UserService {
         return userWithId;
     }
     async deleteAllUser() {
-        return this.userModel.remove();
+        return this.userModel.deleteMany();
     }
     async deleteOneUser(id) {
         return this.userModel.findOneAndRemove({ id });
